@@ -2,8 +2,6 @@
   "covert_channel_code": "CSC-PSV-IP-TOS",
   "send": {
     "parameters": {
-      "parameter1": "p1",
-      "parameter2": 2,
       "possible_values": [
         "0011",
         "0101",
@@ -17,14 +15,12 @@
         }, 
       "receiver_ip": "172.18.0.3",
       "send_sleep_time_in_ms": 100,
+      "sender_decoded_bit_length": 2,
       "log_file_name": "Example_UDPTimingInterarrivalChannelSender.log"
     }
   },
   "receive": {
     "parameters": {
-      "parameter1": "p1",
-      "parameter2": 2,
-      "parameter3": "p3",
       "received_decoded_bit_length": 2,
       "received_encoded_bit_length": 8,
       "sender_ip": "172.18.0.2",
