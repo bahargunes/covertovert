@@ -17,9 +17,24 @@ The implementation includes:
 
 ### Encoding Example
 For a binary message '10':
-1. Generate an 8-bit encoded TOS value.
-2. Match bits based on the pattern and XOR them to encode '10'.
-3. Send this encoded value within the TOS field of an IP packet.
+1. **Input:** Binary bits to encode = '10'.
+2. **Step 1:** Generate a random 4-bit pattern (e.g., '0101') satisfying two 0s and two 1s.
+3. **Step 2:** Map the input '10' into the remaining 4 bits by XOR logic:
+   - First bit ('1'): Use XOR mapping '1 → [1, 0] or [0, 1]' → We can select '10' to add corresponding area.
+      - Like: '0101 1_0_' the XOR result of this 1 and zero gives us first bit which is 1.
+   - Second bit ('0'): Use XOR mapping '0 → [0, 0] or [1, 1]' → We can select '00' to add corresponding area.
+      - The final version becomes '0101 1000'.
+4. **Output:** Encoded 8-bit value = '01011000'.
+5. **Transmission:** This value is sent in the TOS field of an IP packet.
+
+### Decoding Example
+1. **Input:** Received 8-bit TOS value = '01011000'.
+2. **Step 1:** Split the first 4 bits ('0101') and last 4 bits ('1000').
+3. **Step 2:** Perform XOR to decode:
+   - First pair in the last 4 bits (where the 0 values in the first 4 bits) contains '1' and '0' bits: XOR result → '1'.
+   - Second pair in the last 4 bits (where the 1 values in the first 4 bits) contains '0' and '0' bits: XOR → '0'.
+4. **Output:** Decoded bits = '10'.
+5. **Character Mapping:** Combine decoded bits into characters to reconstruct the original message.
 
 ## Implementation Details
 ### Key Components
