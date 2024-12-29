@@ -20,10 +20,8 @@ For a binary message '10':
 1. **Input:** Binary bits to encode = '10'.
 2. **Step 1:** Generate a random 4-bit pattern (e.g., '0101') satisfying two 0s and two 1s.
 3. **Step 2:** Map the input '10' into the remaining 4 bits by XOR logic:
-   - First bit ('1'): Use XOR mapping '1 → [1, 0] or [0, 1]' → We can select '10' to add corresponding area.
-      - Like: '0101 1_0_' the XOR result of this 1 and zero gives us first bit which is 1.
-   - Second bit ('0'): Use XOR mapping '0 → [0, 0] or [1, 1]' → We can select '00' to add corresponding area.
-      - The final version becomes '0101 1000'.
+   - First bit ('1'): Use XOR mapping '1 → [1, 0]' → Appends '10'.
+   - Second bit ('0'): Use XOR mapping '0 → [0, 0]' → Appends '00'.
 4. **Output:** Encoded 8-bit value = '01011000'.
 5. **Transmission:** This value is sent in the TOS field of an IP packet.
 
@@ -31,10 +29,31 @@ For a binary message '10':
 1. **Input:** Received 8-bit TOS value = '01011000'.
 2. **Step 1:** Split the first 4 bits ('0101') and last 4 bits ('1000').
 3. **Step 2:** Perform XOR to decode:
-   - First pair in the last 4 bits (where the 0 values in the first 4 bits) contains '1' and '0' bits: XOR result → '1'.
-   - Second pair in the last 4 bits (where the 1 values in the first 4 bits) contains '0' and '0' bits: XOR → '0'.
+   - First pair ('0, 1'): XOR → '1'.
+   - Second pair ('1, 0'): XOR → '0'.
 4. **Output:** Decoded bits = '10'.
 5. **Character Mapping:** Combine decoded bits into characters to reconstruct the original message.
+
+## Configuration File (config.json)
+The `config.json` file defines all configurable parameters for the sender and receiver.
+
+### Parameters:
+- **covert_channel_code:** Identifier for the covert channel type (e.g., "CSC-PSV-IP-TOS").
+
+#### Sender Parameters:
+- **possible_values:** List of valid 4-bit patterns (e.g., '0011', '0101') used for encoding which needs to contain 
+    two '0' bits and two '1' bits.
+- **xor_res_to_bits:** Mapping table for XOR results to encode message bits (e.g., '0': [['0', '0'], ['1', '1']]).
+- **receiver_ip:** IP address of the receiver to send packets.
+- **send_sleep_time_in_ms:** Delay (in milliseconds) between sending packets to regulate transmission timing.
+- **sender_decoded_bit_length:** Number of bits encoded per packet (e.g., 2 bits).
+- **log_file_name:** File name to log sent messages for debugging and validation.
+
+#### Receiver Parameters:
+- **received_decoded_bit_length:** Number of bits decoded per packet by the receiver (e.g., 2 bits).
+- **received_encoded_bit_length:** Length of the encoded TOS field in bits (e.g., 8 bits).
+- **sender_ip:** IP address of the sender from which packets are expected.
+- **log_file_name:** File name to log received messages for debugging and validation.
 
 ## Implementation Details
 ### Key Components
