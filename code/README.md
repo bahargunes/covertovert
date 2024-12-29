@@ -1,10 +1,13 @@
 # Covert Storage Channel that exploits Protocol Field Manipulation using Type of Service field in IP
 
 ## Overview
-This project implements a **Covert Storage Channel** that exploits the **Type of Service (TOS)** field in the IP header for data transfer. The covert channel leverages unused bits in the TOS field to encode and transmit hidden messages between two endpoints.
+This project implements a **Covert Storage Channel** that exploits the **Type of Service (TOS)** field in the 
+IP header for data transfer. The covert channel leverages unused bits in the TOS field to encode and transmit 
+hidden messages between two endpoints.
 
 The implementation includes:
-1. **Message Encoding and Decoding:** The message is encoded using a custom bit manipulation scheme within the TOS field and decoded by the receiver.
+1. **Message Encoding and Decoding:** The message is encoded using a custom bit manipulation scheme within 
+the TOS field and decoded by the receiver.
 2. **Packet Transmission and Reception:** Messages are sent and received using ICMP packets.
 3. **Logging and Testing Framework:** The system logs sent and received messages for verification.
 
@@ -96,10 +99,15 @@ In our implementation:
 ## Results
 - **Logs Comparison:** Logs generated at sender and receiver are compared to ensure message integrity.
 - **Capacity Measurement:** Covert channel capacity achieved: **15.98 bps**.
+- The main reason why the capacity is not as high as expected is that rapid transmission of encoded messages 
+by the sender can lead to packet losses or out-of-order delivery. This may result in false decoding at the 
+receiver side, reducing effective throughput.  
 
 ## Limitations
 - The implementation relies on the TOS field, which may be overwritten or stripped by network devices.
 - The capacity may vary based on network latency and system performance.
 
 ## Conclusion
-This project successfully demonstrates a covert storage channel exploiting the TOS field in IP headers. It achieves a capacity of approximately **15.98 bits per second** and provides a framework for further exploration of covert channels in networking protocols.
+This project successfully demonstrates a covert storage channel exploiting the TOS field in IP headers. 
+It achieves a capacity of approximately **15.98 bits per second** and provides a framework for further 
+exploration of covert channels in networking protocols.
